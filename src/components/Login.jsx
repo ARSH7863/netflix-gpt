@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header.jsx";
 import { checkValidData } from "../utils/validate.jsx";
-import { ErrorMessage } from "formik";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -13,12 +12,12 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
+    setErrorMessage(null);
   };
 
   const handleButtonClick = () => {
-    // Validate the Form Data
     const message = checkValidData(
-      fullName.current.value,
+      fullName.current?.value,
       email.current.value,
       password.current.value
     );
@@ -26,56 +25,70 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen bg-black">
       <Header />
-      <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/797df41b-1129-4496-beb3-6fc2f29c59d3/web/IN-en-20260112-TRIFECTA-perspective_004732f9-7464-4a7c-940b-4a51c4f0f73f_medium.jpg"
-          alt=""
-          aria-hidden="true"
-          className="default-ltr-iqcdef-cache-19j6xtr"
-        ></img>
-      </div>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="absolute my-36 mx-auto right-0 left-0 p-12 w-3/12 bg-black text-white bg-opacity-80"
-      >
-        <h1 className="font-bold text-3xl py-4">
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </h1>
-        {!isSignInForm && (
-          <input
-            ref={fullName}
-            type="text"
-            placeholder="Enter your full name"
-            className="p-4 my-4 w-full bg-gray-700"
-          />
-        )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email address"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <p className="text-red-500 font-bold text-lg p-2">{errorMessage}</p>
-        <button
-          className="p-4 my-6 bg-red-700 w-full rounded-lg"
-          onClick={handleButtonClick}
+
+      {/* Background */}
+      <img
+        className="absolute inset-0 w-full h-full object-cover opacity-60"
+        src="https://assets.nflxext.com/ffe/siteui/vlv3/797df41b-1129-4496-beb3-6fc2f29c59d3/web/IN-en-20260112-TRIFECTA-perspective_004732f9-7464-4a7c-940b-4a51c4f0f73f_medium.jpg"
+        alt=""
+      />
+
+      {/* Form wrapper */}
+      <div className="relative z-10 flex justify-center items-center min-h-screen px-4">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="w-full max-w-md bg-black bg-opacity-80 p-8 sm:p-10 rounded-md"
         >
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </button>
-        <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
-          {isSignInForm
-            ? "New to Netflix? Sign Up Now"
-            : "Already a user sign in now"}
-        </p>
-      </form>
+          <h1 className="text-3xl font-bold mb-6">
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
+
+          {!isSignInForm && (
+            <input
+              ref={fullName}
+              type="text"
+              placeholder="Full name"
+              className="w-full p-3 mb-4 bg-gray-700 rounded text-white placeholder-gray-400 focus:outline-none"
+            />
+          )}
+
+          <input
+            ref={email}
+            type="email"
+            placeholder="Email address"
+            className="w-full p-3 mb-4 bg-gray-700 rounded text-white placeholder-gray-400 focus:outline-none"
+          />
+
+          <input
+            ref={password}
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 mb-2 bg-gray-700 rounded text-white placeholder-gray-400 focus:outline-none"
+          />
+
+          {errorMessage && (
+            <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
+          )}
+
+          <button
+            className="w-full py-3 mt-4 bg-red-600 hover:bg-red-700 rounded font-semibold transition"
+            onClick={handleButtonClick}
+          >
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </button>
+
+          <p
+            className="text-gray-400 text-sm mt-6 cursor-pointer hover:underline"
+            onClick={toggleSignInForm}
+          >
+            {isSignInForm
+              ? "New to Netflix? Sign up now."
+              : "Already have an account? Sign in."}
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

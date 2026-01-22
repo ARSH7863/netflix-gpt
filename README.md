@@ -13,6 +13,8 @@
 - Create a signup in firebase
 - Implement Sign In User API
 - Created Redux Store
+- Implement Sign Up User API
+- Profile Update
 
 # Features
 - Login/Signup Page

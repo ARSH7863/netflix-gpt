@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { BACKGROUND_IMAGE } from "../utils/constants.jsx";
 import Header from "./Header.jsx";
 import { checkValidData } from "../utils/validate.jsx";
 
@@ -109,15 +110,15 @@ const Login = () => {
       {/* Background */}
       <img
         className="absolute inset-0 w-full h-full object-cover opacity-60"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/797df41b-1129-4496-beb3-6fc2f29c59d3/web/IN-en-20260112-TRIFECTA-perspective_004732f9-7464-4a7c-940b-4a51c4f0f73f_medium.jpg"
-        alt=""
+        src={BACKGROUND_IMAGE}
+        alt="background"
       />
 
       {/* Form wrapper */}
       <div className="relative z-10 flex justify-center items-center min-h-screen px-4">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full max-w-md bg-black bg-opacity-80 p-8 sm:p-10 rounded-md"
+          className="w-full max-w-md bg-black text-white bg-opacity-80 p-8 sm:p-10 rounded-md"
         >
           <h1 className="text-3xl font-bold mb-6">
             {isSignInForm ? "Sign In" : "Sign Up"}

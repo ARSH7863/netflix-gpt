@@ -15,6 +15,8 @@
 - Created Redux Store
 - Implement Sign Up User API
 - Profile Update
+- Fixed Bug - If the user is not logged in can still redirect to browse page so fixed it
+- Unsubscribed to the onAuthStateChange Callback
 
 # Features
 - Login/Signup Page

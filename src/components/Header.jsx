@@ -1,4 +1,3 @@
-import React from "react";
 import { LOGO, USER_ICON } from "../utils/constants.jsx";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";

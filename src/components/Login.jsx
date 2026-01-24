@@ -53,7 +53,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: fullName.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/51819610?v=4",
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
           })
             .then(() => {
               // Profile updated!

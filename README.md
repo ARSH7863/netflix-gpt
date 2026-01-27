@@ -25,6 +25,12 @@
 - Fetched Data for Trailer Video
 - Updated store with Trailer Video Data
 - Emmbedded the Youtube Video and made it autoplay annd muted
+- Built Secondary Component
+- Built Movie List
+- Built Movie Card
+- TMDB Image CDN URL
+- Made browse page look good with tailwind
+- Created usePopular custom hook
 
 
 # Features

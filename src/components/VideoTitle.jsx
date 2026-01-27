@@ -3,26 +3,27 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const VideoTitle = ({ title, overview }) => {
   return (
-    <div className="pt-36 px-12">
-      <h1 className="text-6xl font-bold">{title}</h1>
-      <p className="py-6 text-lg w-1/4">{overview}</p>
+    <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent">
+      <div className="pt-[18%] px-24 text-white max-w-2xl">
+        <h1 className="text-6xl font-bold leading-tight">{title}</h1>
 
-      {/* <div className="flex gap-4">
-        <button className="bg-gray-500 text-black p-4 px-10">Play</button>
-        <button className="">More Info</button>
-      </div> */}
-      <div className="flex gap-4">
-        {/* Play Button */}
-        <button className="flex items-center gap-3 bg-white text-black px-8 py-4 rounded-md font-semibold hover:bg-gray-300 transition">
-          <FaPlay />
-          Play
-        </button>
+        <p className="mt-4 text-lg text-gray-200 leading-relaxed line-clamp-3">
+          {overview}
+        </p>
 
-        {/* More Info Button */}
-        <button className="flex items-center gap-3 bg-gray-500/70 text-white px-10 py-4 rounded-md font-semibold hover:bg-gray-500 transition">
-          <AiOutlineInfoCircle />
-          More Info
-        </button>
+        <div className="mt-8 flex gap-4">
+          {/* Play */}
+          <button className="flex items-center gap-3 bg-white text-black px-8 py-2 rounded font-semibold hover:bg-gray-200 transition">
+            <FaPlay className="text-sm" />
+            Play
+          </button>
+
+          {/* More Info */}
+          <button className="flex items-center gap-3 bg-gray-500/50 text-white px-6 py-2 rounded font-semibold hover:bg-gray-500/70 transition">
+            <AiOutlineInfoCircle className="text-xl" />
+            More Info
+          </button>
+        </div>
       </div>
     </div>
   );

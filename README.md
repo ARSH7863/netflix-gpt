@@ -31,6 +31,7 @@
 - TMDB Image CDN URL
 - Made browse page look good with tailwind
 - Created usePopular custom hook
+- GPT Search Feature
 
 
 # Features

@@ -47,7 +47,6 @@ const GPTSearchBar = () => {
         movieNames.map((movie) => searchMovieTMDB(movie)),
       );
 
-      console.log("TMDB RESULTS 👉", tmdbResults);
       // yahin se Redux dispatch karega next
       dispatch(
         addGPTMovieResult({

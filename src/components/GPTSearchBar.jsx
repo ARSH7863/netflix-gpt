@@ -18,12 +18,17 @@ const GPTSearchBar = () => {
     setResponse("");
 
     try {
-      const prompt =
-        "You are a movie recommendation system. " +
-        "Suggest exactly top 5 movies. " +
-        "Return only movie names, comma separated. " +
-        "User query: " +
-        query;
+      const prompt = `
+        You are a movie recommendation system.
+
+        Rules:
+        - If the user query is NOT related to movies, genres, actors, moods, or film preferences,
+          respond with exactly: INVALID_QUERY
+        - If valid, suggest exactly 5 movie names, comma separated.
+        - Do not add explanations or extra text.
+
+        User query: ${query}
+        `;
 
       const result = await generateResponse(prompt);
       setResponse(result);

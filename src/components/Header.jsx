@@ -95,11 +95,11 @@ const Header = () => {
             </button>
 
             {/* Avatar */}
-            <img
+            {/* <img
               className="h-7 w-7 sm:h-8 sm:w-8 rounded"
               src={USER_ICON}
               alt="User Icon"
-            />
+            /> */}
           </div>
         )}
       </div>

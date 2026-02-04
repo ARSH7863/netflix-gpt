@@ -53,24 +53,29 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-black to-transparent">
-      <div className="flex items-center justify-between px-10 py-6">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-10 py-4 sm:py-6">
         {/* Logo */}
-        <img className="w-36 cursor-pointer" src={LOGO} alt="Netflix Logo" />
+        <img
+          className="w-28 sm:w-36 cursor-pointer"
+          src={LOGO}
+          alt="Netflix Logo"
+        />
 
-        {/* Right buttons */}
+        {/* Right Section */}
         {user && (
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-6 w-full sm:w-auto">
+            {/* GPT Search */}
             <button
-              className="border border-white px-6 py-1.5 text-sm text-white rounded  bg-purple-600 hover:bg-purple-800"
+              className="border border-white px-4 sm:px-6 py-1.5 text-xs sm:text-sm text-white rounded bg-purple-600 hover:bg-purple-800"
               onClick={handleGPTSearchClick}
             >
               GPT Search
             </button>
+
+            {/* Language Selector */}
             {showGptSearch && (
               <select
-                name=""
-                id=""
-                className="border border-white px-6 py-1.5 text-sm text-white rounded bg-black/60 hover:bg-black/80"
+                className="border border-white px-3 sm:px-6 py-1.5 text-xs sm:text-sm text-white rounded bg-black/60 hover:bg-black/80"
                 onChange={handleLanguageChange}
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (
@@ -81,18 +86,20 @@ const Header = () => {
               </select>
             )}
 
-            {/* <button className="border border-white px-6 py-1.5 text-sm text-white rounded bg-black/60 hover:bg-black/80">
-              English
-            </button> */}
-
+            {/* Sign Out */}
             <button
-              className="bg-red-600 px-6 py-1.5 text-sm text-white rounded hover:bg-red-700"
+              className="bg-red-600 px-4 sm:px-6 py-1.5 text-xs sm:text-sm text-white rounded hover:bg-red-700"
               onClick={handleSignOut}
             >
               Sign Out
             </button>
 
-            <img className="h-8 w-8 rounded" src={USER_ICON} alt="User Icon" />
+            {/* Avatar */}
+            <img
+              className="h-7 w-7 sm:h-8 sm:w-8 rounded"
+              src={USER_ICON}
+              alt="User Icon"
+            />
           </div>
         )}
       </div>

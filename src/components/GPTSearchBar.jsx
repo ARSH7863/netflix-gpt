@@ -7,7 +7,6 @@ import { addGPTMovieResult } from "../utils/gptSlice.jsx";
 
 const GPTSearchBar = () => {
   const dispatch = useDispatch();
-
   const languageKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
 
@@ -23,21 +22,20 @@ const GPTSearchBar = () => {
 
     try {
       const prompt = `
-      You are a movie recommendation system.
-      Rules:
-      - If the user query is NOT related to movies, genres, actors, moods, or film preferences,
-        respond with exactly: Please enter valid query :)
-      - If valid, suggest exactly 5 movie names, comma separated.
-      - Do not add explanations or extra text.
+You are a movie recommendation system.
+Rules:
+- If the user query is NOT related to movies, genres, actors, moods, or film preferences,
+  respond with exactly: Please enter valid query :)
+- If valid, suggest exactly 5 movie names, comma separated.
+- Do not add explanations or extra text.
 
-      User query: ${query}
-    `;
+User query: ${query}
+      `;
 
       const gptResult = await generateResponse(prompt);
 
       if (gptResult.includes("Please enter valid query")) {
         setResponse(gptResult);
-        setLoading(false);
         return;
       }
 
@@ -47,15 +45,13 @@ const GPTSearchBar = () => {
         movieNames.map((movie) => searchMovieTMDB(movie)),
       );
 
-      // yahin se Redux dispatch karega next
       dispatch(
         addGPTMovieResult({
-          movieNames: movieNames,
+          movieNames,
           movieResults: tmdbResults,
         }),
       );
     } catch (err) {
-      console.error(err);
       setResponse("Something went wrong.");
     } finally {
       setLoading(false);
@@ -75,19 +71,21 @@ const GPTSearchBar = () => {
   };
 
   return (
-    <div className="pt-[10%] flex flex-col items-center">
+    <div className="mt-24 px-4 flex flex-col items-center">
+      {/* Search Box */}
       <form
-        className="w-1/2 bg-black grid grid-cols-12"
+        className="w-full max-w-3xl bg-black rounded-lg p-4 flex flex-col sm:flex-row gap-3"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchText}
           type="text"
-          className="p-4 m-4 col-span-9"
+          className="flex-1 p-3 rounded text-black text-sm sm:text-base"
           placeholder={lang[languageKey].gptSearchPlaceholder}
         />
+
         <button
-          className="col-span-3 py-2 px-4 m-4 bg-red-700 text-white rounded-lg"
+          className="bg-red-700 text-white px-6 py-3 rounded text-sm sm:text-base disabled:opacity-60"
           onClick={handleGPTSearchClick}
           disabled={loading}
         >
@@ -95,8 +93,9 @@ const GPTSearchBar = () => {
         </button>
       </form>
 
+      {/* AI Response */}
       {response && (
-        <div className="w-1/2 mt-6 bg-gray-900 text-white p-4 rounded">
+        <div className="w-full max-w-3xl mt-6 bg-gray-900 text-white p-4 rounded">
           <strong>AI Response:</strong>
           <p className="mt-2 whitespace-pre-wrap">{response}</p>
         </div>

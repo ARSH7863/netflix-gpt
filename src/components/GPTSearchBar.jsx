@@ -83,7 +83,7 @@ User query: ${query}
   };
 
   return (
-    <div className="mt-24 px-4 flex flex-col items-center">
+    <div className="w-full flex flex-col items-center">
       {/* Search Box */}
       <form
         className="w-full max-w-3xl bg-black rounded-lg p-4 flex flex-col sm:flex-row gap-3"

@@ -59,17 +59,20 @@ const Header = () => {
           className="w-28 sm:w-36 cursor-pointer"
           src={LOGO}
           alt="Netflix Logo"
+          onClick={() => {
+            if (showGptSearch) dispatch(toggleGPTSearchView());
+          }}
         />
 
         {/* Right Section */}
         {user && (
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-6 w-full sm:w-auto">
-            {/* GPT Search */}
+            {/* GPT Search / Back to Home Toggle */}
             <button
-              className="border border-white px-4 sm:px-6 py-1.5 text-xs sm:text-sm text-white rounded bg-purple-600 hover:bg-purple-800"
+              className="border border-white px-4 sm:px-6 py-1.5 text-xs sm:text-sm text-white rounded bg-purple-600 hover:bg-purple-800 transition cursor-pointer font-medium"
               onClick={handleGPTSearchClick}
             >
-              GPT Search
+              {showGptSearch ? "Back to Home" : "GPT Search"}
             </button>
 
             {/* Language Selector */}

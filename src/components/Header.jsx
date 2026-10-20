@@ -1,4 +1,4 @@
-import { LOGO, USER_ICON } from "../utils/constants.jsx";
+import { LOGO } from "../utils/constants.jsx";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase.jsx";
 import { useNavigate } from "react-router-dom";

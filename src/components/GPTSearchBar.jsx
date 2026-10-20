@@ -26,20 +26,31 @@ You are a movie recommendation system.
 Rules:
 - If the user query is NOT related to movies, genres, actors, moods, or film preferences,
   respond with exactly: Please enter valid query :)
-- If valid, suggest exactly 5 movie names, comma separated.
-- Do not add explanations or extra text.
+- If valid, provide exactly 5 movie titles separated ONLY by commas.
+- Do NOT include numbering (like 1, 2, 3), bullet points, years in parentheses, or extra text/explanations.
+- Example output format: Inception, Interstellar, The Dark Knight, Memento, Dunkirk
 
 User query: ${query}
       `;
 
       const gptResult = await generateResponse(prompt);
 
-      if (gptResult.includes("Please enter valid query")) {
-        setResponse(gptResult);
+      if (!gptResult || gptResult.includes("Please enter valid query") || gptResult.includes("Error generating response")) {
+        setResponse(gptResult || "Please enter valid query :)");
         return;
       }
 
-      const movieNames = gptResult.split(",").map((m) => m.trim());
+      // Robustly parse movie names: strip leading numbering (1. Movie), markdown (*), quotes
+      const movieNames = gptResult
+        .split(/,|\n/)
+        .map((m) => m.replace(/^\s*\d+[.)]\s*|\*+|"|'/g, "").trim())
+        .filter((m) => m.length > 1)
+        .slice(0, 5);
+
+      if (movieNames.length === 0) {
+        setResponse("Could not find suitable recommendations. Please try a different query.");
+        return;
+      }
 
       const tmdbResults = await Promise.all(
         movieNames.map((movie) => searchMovieTMDB(movie)),
@@ -52,7 +63,8 @@ User query: ${query}
         }),
       );
     } catch (err) {
-      setResponse("Something went wrong.");
+      console.error("GPT search error:", err);
+      setResponse("Something went wrong. Please check your network or try again.");
     } finally {
       setLoading(false);
     }

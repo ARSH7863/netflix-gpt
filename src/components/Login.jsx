@@ -42,43 +42,37 @@ const Login = () => {
     // Sign in/Sign Up Logic
     if (!isSignInForm) {
       // Sign Up Logic
-
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value,
       )
         .then((userCredential) => {
-          // Signed up
           const user = userCredential.user;
           updateProfile(user, {
             displayName: fullName.current.value,
-            photoURL: "https://example.com/jane-q-user/profile.jpg",
           })
             .then(() => {
-              // Profile updated!
-              // ...
-              const { uid, email, displayName } = auth.currentUser;
-              dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName }),
-              );
+              const currentUser = auth.currentUser;
+              if (currentUser) {
+                dispatch(
+                  addUser({
+                    uid: currentUser.uid,
+                    email: currentUser.email,
+                    displayName: currentUser.displayName,
+                  }),
+                );
+              }
               navigate("/browse");
             })
             .catch((error) => {
-              // An error occurred
-              // ...
               setErrorMessage(error.message);
             });
-
-          navigate("/browse");
-
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
-          // ..
+          const message = error.message;
+          setErrorMessage(errorCode + ": " + message);
         });
     } else {
       // Sign In Logic
@@ -87,16 +81,13 @@ const Login = () => {
         email.current.value,
         password.current.value,
       )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
+        .then(() => {
           navigate("/browse");
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          const message = error.message;
+          setErrorMessage(errorCode + ": " + message);
         });
     }
   };

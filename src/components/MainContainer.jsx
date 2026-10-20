@@ -29,7 +29,11 @@ const MainContainer = () => {
 
       {/* Title + Actions */}
       <div className="absolute inset-0 z-20">
-        <VideoTitle title={original_title} overview={overview} />
+        <VideoTitle
+          title={original_title}
+          overview={overview}
+          movie={mainMovie}
+        />
       </div>
     </section>
   );

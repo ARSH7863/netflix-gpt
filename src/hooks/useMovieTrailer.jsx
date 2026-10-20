@@ -13,18 +13,26 @@ const useMovieTrailer = (movieId) => {
   }, []);
 
   const getMovieVideos = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" +
-        movieId +
-        "/videos?language=en-US",
-      API_OPTIONS,
-    );
-    const json = await data.json();
+    try {
+      const data = await fetch(
+        "https://api.themoviedb.org/3/movie/" +
+          movieId +
+          "/videos?language=en-US",
+        API_OPTIONS,
+      );
+      const json = await data.json();
 
-    const filterData = json.results.filter((video) => video.type === "Trailer");
-    const trailer = filterData.length === 0 ? filterData[0] : json.results[0];
+      if (!json.results) return;
 
-    dispatch(addTrailerVideo(trailer));
+      const filterData = json.results.filter((video) => video.type === "Trailer");
+      const trailer = filterData.length > 0 ? filterData[0] : json.results[0];
+
+      if (trailer) {
+        dispatch(addTrailerVideo(trailer));
+      }
+    } catch (err) {
+      console.error("Error fetching movie trailer:", err);
+    }
   };
 };
 

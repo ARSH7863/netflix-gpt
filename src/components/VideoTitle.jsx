@@ -1,7 +1,17 @@
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { setSelectedMovie } from "../utils/moviesSlice";
 
-const VideoTitle = ({ title, overview }) => {
+const VideoTitle = ({ title, overview, movie }) => {
+  const dispatch = useDispatch();
+
+  const handleOpenModal = () => {
+    if (movie) {
+      dispatch(setSelectedMovie(movie));
+    }
+  };
+
   return (
     <div className="absolute inset-0 z-20">
       {/* Gradient overlay */}
@@ -40,13 +50,19 @@ const VideoTitle = ({ title, overview }) => {
           {/* Actions */}
           <div className="mt-5 sm:mt-10 flex flex-wrap gap-3 sm:gap-4">
             {/* Play */}
-            <button className="flex items-center gap-2 sm:gap-3 bg-white text-black px-5 sm:px-8 py-2 rounded font-semibold hover:bg-gray-200 transition">
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center gap-2 sm:gap-3 bg-white text-black px-5 sm:px-8 py-2 rounded font-semibold hover:bg-gray-200 transition cursor-pointer"
+            >
               <FaPlay className="text-xs sm:text-sm" />
               Play
             </button>
 
             {/* More Info */}
-            <button className="flex items-center gap-2 sm:gap-3 bg-gray-500/50 text-white px-4 sm:px-6 py-2 rounded font-semibold hover:bg-gray-500/70 transition">
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center gap-2 sm:gap-3 bg-gray-500/50 text-white px-4 sm:px-6 py-2 rounded font-semibold hover:bg-gray-500/70 transition cursor-pointer"
+            >
               <AiOutlineInfoCircle className="text-lg sm:text-xl" />
               More Info
             </button>

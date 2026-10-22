@@ -7,14 +7,20 @@ export const USER_ICON =
 export const BACKGROUND_IMAGE =
   "https://assets.nflxext.com/ffe/siteui/vlv3/797df41b-1129-4496-beb3-6fc2f29c59d3/web/IN-en-20260112-TRIFECTA-perspective_004732f9-7464-4a7c-940b-4a51c4f0f73f_medium.jpg";
 
+const TMDB_TOKEN =
+  process.env.REACT_APP_TMDB_ACCESS_TOKEN ||
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YmM2ZDhlZWI4YjhjMzMxMzg4ZDc1OTEzMjI5YTMzZCIsIm5iZiI6MTc2OTUwNzU3NC4yNTIsInN1YiI6IjY5Nzg4YWY2MTJlNzY3M2UxYmI2OGFlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CrdorH2eBhx81CQdgLmcE9SGSoW4O5vfQllo2DLGWas";
+
 export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer " + (process.env.REACT_APP_TMDB_ACCESS_TOKEN || ""),
+    Authorization: `Bearer ${TMDB_TOKEN}`,
   },
 };
+
+// Fallback high quality trailer (Avengers: Infinity War) in case TMDB video API fails or is blocked
+export const DEFAULT_TRAILER_KEY = "6ZfuNTqbHE8";
 
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
 

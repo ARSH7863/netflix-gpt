@@ -30,13 +30,19 @@ const MovieModal = () => {
         if (json.results && json.results.length > 0) {
           const trailer =
             json.results.find((vid) => vid.type === "Trailer" && vid.site === "YouTube") ||
+            json.results.find((vid) => vid.site === "YouTube") ||
             json.results[0];
           if (trailer?.key) {
             setTrailerKey(trailer.key);
+            return;
           }
         }
+
+        // Fallback trailer if none exists
+        setTrailerKey("6ZfuNTqbHE8");
       } catch (err) {
         console.error("Failed to load movie video:", err);
+        setTrailerKey("6ZfuNTqbHE8");
       } finally {
         if (isMounted) setLoading(false);
       }

@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants.jsx";
+import { API_OPTIONS, DEFAULT_TRAILER_KEY } from "../utils/constants.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrailerVideo } from "../utils/moviesSlice.jsx";
 
 const useMovieTrailer = (movieId) => {
-  // Fetch Trailer Video
   const dispatch = useDispatch();
-  const trailerVideo = useSelector((store) => store.movies.trailerVideo);
 
   useEffect(() => {
-    !trailerVideo && getMovieVideos();
-  }, []);
+    if (!movieId) return;
+    getMovieVideos();
+  }, [movieId]);
 
   const getMovieVideos = async () => {
     try {
@@ -22,16 +21,24 @@ const useMovieTrailer = (movieId) => {
       );
       const json = await data.json();
 
-      if (!json.results) return;
+      if (json.results && json.results.length > 0) {
+        const filterData = json.results.filter(
+          (video) => video.type === "Trailer" && video.site === "YouTube"
+        );
+        const trailer = filterData.length > 0 ? filterData[0] : json.results[0];
 
-      const filterData = json.results.filter((video) => video.type === "Trailer");
-      const trailer = filterData.length > 0 ? filterData[0] : json.results[0];
-
-      if (trailer) {
-        dispatch(addTrailerVideo(trailer));
+        if (trailer?.key) {
+          dispatch(addTrailerVideo(trailer));
+          return;
+        }
       }
+
+      // Fallback if no results from TMDB
+      dispatch(addTrailerVideo({ key: DEFAULT_TRAILER_KEY, name: "Trailer" }));
     } catch (err) {
       console.error("Error fetching movie trailer:", err);
+      // Fallback so user always sees a working trailer
+      dispatch(addTrailerVideo({ key: DEFAULT_TRAILER_KEY, name: "Trailer" }));
     }
   };
 };
